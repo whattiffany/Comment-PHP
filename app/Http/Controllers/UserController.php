@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use App\Service\UserService;
 use Validator;
+
 class UserController extends Controller
 {
     public function register(Request $request){

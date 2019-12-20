@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Validator;
 use App\Service\CommentService;
+use Validator;
+
 class CommentController extends Controller
 {
     public function comment(Request $request){
@@ -27,7 +28,12 @@ class CommentController extends Controller
         if($objValidator->fails())
             return response()->json($objValidator->errors()->all(),400);
         $commentService = new CommentService();
-        $newComment = $commentService->comment($postData);
+        $newComment = $commentService->Comment($postData);
         return response()->json($newComment,200); 
+    }
+    public function getComments(Request $request){
+        $commentService = new CommentService();
+        $result = $commentService->getComments($postData);
+        return response()->json($result,200); 
     }
 }

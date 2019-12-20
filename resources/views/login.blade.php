@@ -66,12 +66,10 @@
     </head>
     <body>
         <div class="flex-center position-ref full-height">           
-                        <a href="{{ url('/login') }}">Login</a>
-                        |
-                        <a href="{{ url('/register') }}">Register</a>               
+                                
             <div class="content">
                 <div class="title m-b-md">
-                    Welcome
+                   Login
                 </div>
             </div>
         </div>
