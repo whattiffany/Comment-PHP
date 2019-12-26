@@ -33,7 +33,7 @@ class CommentController extends Controller
     }
     public function getComments(Request $request){
         $commentService = new CommentService();
-        $result = $commentService->getComments($postData);
+        $result = $commentService->getComments($request);
         return response()->json($result,200); 
     }
 }
