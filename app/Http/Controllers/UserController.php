@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Service\UserService;
 use Validator;
-
+use Tymon\JWTAuth\Facades\JWTAuth;
 class UserController extends Controller
 {
     public function register(Request $request){
@@ -56,9 +56,14 @@ class UserController extends Controller
         $userService = new UserService();
         $result = $userService->login($postData);
         if(!is_string($request)){
-            return response()->json($result,200);
+            $token = JWTAuth::fromUser($result);
+            return response()->json($token,200);
         }else{
             return response()->json([$result],400);
         }
+    }
+    public function getUserData(Request $request){
+        $userData = $request->input('user');
+        return response()->json($userData,200);
     }
 }

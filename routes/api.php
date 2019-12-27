@@ -15,5 +15,9 @@ use Illuminate\Http\Request;
 
 Route::post('register','UserController@register');
 Route::post('login','UserController@login');
-Route::post('comment','CommentController@comment');
 Route::post('getComments','CommentController@getComments');
+Route::group(['middleware'=>'jwtAuth'],function(){
+    Route::post('comment','CommentController@comment');
+    Route::post('getUserData','UserController@login');
+});
+
