@@ -66,4 +66,8 @@ class UserController extends Controller
         $userData = $request->input('user');
         return response()->json($userData,200);
     }
+    public function logout(){
+        JWTAuth::setToken(JWTAuth::getToken())->invalidate();
+        return response()->json("登出成功",200);
+    }
 }

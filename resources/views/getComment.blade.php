@@ -8,7 +8,7 @@
              integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
              crossorigin="anonymous"></script>
         
-        <title>Login</title>
+        <title>getComment</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
@@ -16,72 +16,67 @@
         <!-- Styles -->
         <style>
              html, body {
-                background-color: #114680;
-                color: #fff;
+                background-color: #FFC1E0;
+                color: #D9006C;
                 font-family: 'Microsoft JhengHei','Raleway', sans-serif;
                 font-weight: 100;
                 height: 100vh;
                 margin: 0;
             }
             .content {
+                width:500px;
+                margin:0 auto;
                 font-weight:bold;
-                text-align: center;
                 padding-top:50px;
-                
-            }         
-            input{
+                text-align: center;
+            }       
+              
+            #comments{
                 margin:5px;
+                text-align: left;
             }
         </style>
     </head>
     <body>
         <div class="flex-center position-ref full-height">         
-            <div class="content"> 
-                <h1>Login</h1>               
-                    <div class="register m-b-md">
-                    帳號：<input id="account" type="text"/>
-                    <br/>                    
-                    密碼：<input id="password" type="text"/>
-                    <br/>                                
-                    <button onclick="login()">送出</button>
-                    </div>               
+            <div class="content">                                   
+                    <div class="m-b-md"> 
+                    <a href="{{ url('/') }}">回首頁<a>                                       
+                    <h1>-----留言版-----<h1>          
+                    </div> 
+                    <br/>
+                    <div id="comments"></div>                
             </div>
         </div>
     </body>
-    <script>
-         $(document).ready(function () {
-             if(localStorage.getItem("token")){
-                 alert("您已登入！")
-                 window.location.href = "http://127.0.0.1/web/public/";
-             }else{
-                 return 0;
-             }
-         })       
-         function login(){
-            var account=$("#account").val();
-            var password=$("#password").val();              
+    <script>                                  
             $.ajax({
-            url: 'http://127.0.0.1/web/public/api/login', 
+            url: 'http://127.0.0.1/web/public/api/getComments',
             type: 'POST',                                            
             data: {
-                "account":account,                                           
-                "password":password,   
+                                                          
             },                                    
             dataType: 'json',                                      
-            success: function(data){                                
-                localStorage.setItem("token",data)              
+            success: function(data){       
+                $.each(data, function (i, val) {
+                     var string = "<label>編號："+data[i].comment_id+"</label><br>"+
+                     "<label>留言者："+data[i].name+"</label><br>"+
+                     "<label>留言內容："+data[i].content+"</label><br>"+
+                     "<label>留言時間："+data[i].created_at+"</label><br>"+
+                     "------------------<br>";
+                     $("#comments").append(string)  
+                })             
+                        
             },
             statusCode: {   
                 200: function(res) {
-                    console.log(res);
-                    alert( "登入成功" );
-                    window.location.href = "http://127.0.0.1/web/public/comment";
+                    console.log(res);                   
                 },                                       
                 400: function(res) {
                 console.log(res.responseJSON[0]);
                 alert( res.responseJSON[0]);
                 }
             }
-            })}
+            })
         </script>
 </html>

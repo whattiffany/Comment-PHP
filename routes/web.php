@@ -20,3 +20,10 @@ Route::get('/login', function () {
 Route::get('/register', function () {
     return view('register');
 });
+Route::get('/comment', function () {
+    return view('comment');
+});
+Route::get('/getComment', function () {
+    return view('getComment');
+});
+

@@ -19,5 +19,6 @@ Route::post('getComments','CommentController@getComments');
 Route::group(['middleware'=>'jwtAuth'],function(){
     Route::post('comment','CommentController@comment');
     Route::post('getUserData','UserController@login');
+    Route::post('logout','UserController@logout');
 });
 

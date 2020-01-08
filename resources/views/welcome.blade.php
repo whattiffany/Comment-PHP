@@ -80,7 +80,36 @@
                     <a href="{{ url('/login') }}">Login</a>
                         |
                     <a href="{{ url('/register') }}">Register</a>
+                        |
+                    <a href="{{ url('/comment') }}">Go Comments</a>
+                        |
+                    <a href="{{ url('/getComment') }}">See Comments</a>
+                        |
+                    <a onclick="logout()">logOut</a>
             </div>
         </div>
     </body>
+    <script> 
+         var token = localStorage.getItem("token");  
+         function logout(){                       
+            $.ajax({
+            url: 'http://127.0.0.1/web/public/api/logout',
+            headers: {
+            'Authorization': `Bearer ${token}`,
+            }, 
+            type: 'POST',                                                                             
+            dataType: 'json',                                      
+            statusCode: {   
+                200: function(res) {
+                    console.log(res);
+                    alert( res );
+                    localStorage.clear();
+                },                                       
+                400: function(res) {
+                console.log(res.responseJSON[0]);
+                alert( res.responseJSON[0]);
+                }
+            }
+            })}
+        </script>
 </html>

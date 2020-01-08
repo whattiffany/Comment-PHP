@@ -8,7 +8,7 @@
              integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
              crossorigin="anonymous"></script>
         
-        <title>Login</title>
+        <title>Comment</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
@@ -16,8 +16,8 @@
         <!-- Styles -->
         <style>
              html, body {
-                background-color: #114680;
-                color: #fff;
+                background-color:#FFC1E0;
+                color: #D9006C;
                 font-family: 'Microsoft JhengHei','Raleway', sans-serif;
                 font-weight: 100;
                 height: 100vh;
@@ -37,44 +37,42 @@
     <body>
         <div class="flex-center position-ref full-height">         
             <div class="content"> 
-                <h1>Login</h1>               
-                    <div class="register m-b-md">
-                    帳號：<input id="account" type="text"/>
-                    <br/>                    
-                    密碼：<input id="password" type="text"/>
+                <h1>Comment</h1>               
+                    <div class="register m-b-md"> 
+                    <a href="{{ url('/') }}">回首頁<a> <br>                                    
+                    留言內容：<input id="comment" type="textarea"/>
                     <br/>                                
-                    <button onclick="login()">送出</button>
+                    <button onclick="comment()">送出</button>
+                    </div>               
+                    <div class="register m-b-md">                                     
+                    <a href="{{ url('/getComment') }}">前往留言板</a>
+                    <br/>
+                                                    
                     </div>               
             </div>
         </div>
     </body>
-    <script>
-         $(document).ready(function () {
-             if(localStorage.getItem("token")){
-                 alert("您已登入！")
-                 window.location.href = "http://127.0.0.1/web/public/";
-             }else{
-                 return 0;
-             }
-         })       
-         function login(){
-            var account=$("#account").val();
-            var password=$("#password").val();              
+    <script> 
+         var token = localStorage.getItem("token");  
+         function comment(){
+            var content=$("#comment").val();                          
             $.ajax({
-            url: 'http://127.0.0.1/web/public/api/login', 
+            url: 'http://127.0.0.1/web/public/api/comment',
+            headers: {
+            'Authorization': `Bearer ${token}`,
+            }, 
             type: 'POST',                                            
             data: {
-                "account":account,                                           
-                "password":password,   
+                "content":content,                                           
             },                                    
             dataType: 'json',                                      
             success: function(data){                                
-                localStorage.setItem("token",data)              
+                              
             },
             statusCode: {   
                 200: function(res) {
                     console.log(res);
-                    alert( "登入成功" );
+                    alert( "留言成功" );
                     window.location.href = "http://127.0.0.1/web/public/comment";
                 },                                       
                 400: function(res) {
